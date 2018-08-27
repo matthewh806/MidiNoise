@@ -37,11 +37,22 @@ private:
     ComboBox arpegiatorToggle;
     Label arpeggiatorToggleLabel;
     
-    MidiOutput *output;
+    ComboBox latchToggle;
+    Label latchToggleLabel;
+    
+    ComboBox legatoToggle;
+    Label lagatoToggleLabel;
+    
+    ComboBox midiClock;
+    Label midiClockLabel;
+    
+    MidiOutput *output = nullptr;
     
     //==============================================================================
     void setMidiOutput(int index);
     void setArpegiatorState(int value);
+    void setLatchState(int value);
+    void sendMidiMessage(int channel, int type, int value);
     
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)

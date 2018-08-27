@@ -38,8 +38,19 @@ MainComponent::MainComponent()
     
     arpegiatorToggle.addItem("off", 1);
     arpegiatorToggle.addItem("on", 2);
+//    arpegiatorToggle.setText("set");
     arpegiatorToggle.onChange = [this] { setArpegiatorState(arpegiatorToggle.getSelectedId() - 1);};
     addAndMakeVisible(arpegiatorToggle);
+    
+    addAndMakeVisible(latchToggleLabel);
+    latchToggleLabel.setText("Latch", dontSendNotification);
+    latchToggleLabel.attachToComponent(&latchToggle, true);
+    
+    latchToggle.addItem("off", 1);
+    latchToggle.addItem("on", 2);
+//    latchToggle.setText("set");
+    latchToggle.onChange = [this] { setLatchState(latchToggle.getSelectedId()-1);};
+    addAndMakeVisible(latchToggle);
 }
 
 MainComponent::~MainComponent()
@@ -61,8 +72,9 @@ void MainComponent::resized()
 {
     auto area = getLocalBounds();
     
-    midiOutputList.setBounds(area.removeFromTop(36).removeFromRight(getWidth()-150).reduced(8));
-    arpegiatorToggle.setBounds(area.removeFromTop(36).removeFromRight(getWidth()-150).reduced(8));
+    midiOutputList.setBounds(area.removeFromTop(36).removeFromRight(getWidth()-400).reduced(8));
+    arpegiatorToggle.setBounds(area.removeFromTop(36).removeFromRight(getWidth()-400).reduced(8));
+    latchToggle.setBounds(area.removeFromTop(36).removeFromRight(getWidth()-400).reduced(8));
 }
 
 //==============================================================================
@@ -80,12 +92,25 @@ void MainComponent::setMidiOutput(int index)
 
 void MainComponent::setArpegiatorState(int value)
 {
+    sendMidiMessage(2, 117, value);
+}
+
+void MainComponent::setLatchState(int value)
+{
+    sendMidiMessage(2, 119, value);
+}
+
+void MainComponent::sendMidiMessage(int channel, int type, int value)
+{
     if(output == nullptr)
     {
         // TODO: Log a warning here and try to reconnect?
+        return;
     }
     
     // TODO: Change this midi note to 117 for arpegiator state (this is an easier initial testing value)
-    MidiMessage message = MidiMessage::controllerEvent(2, 119, value);
+    MidiMessage message = MidiMessage::controllerEvent(channel, type, value);
     output->sendMessageNow(message);
 }
+
+
