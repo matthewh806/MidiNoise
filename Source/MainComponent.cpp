@@ -44,6 +44,11 @@ MainComponent::MainComponent()
         // TODO: The value here is wrong, fix it!
         sendMidiMessage(2, 119, generalPages.midiClock.getSelectedId() - 1);
     };
+    
+    midiSettingsPages.makeNoiseButton.onClick = [this]
+    {
+        Logger::getCurrentLogger()->writeToLog("Make some fucking noooooooise");
+    };
 }
 
 MainComponent::~MainComponent()

@@ -16,7 +16,9 @@ MidiSettingsPages::MidiSettingsPages()
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.
-
+    
+    addAndMakeVisible(makeNoiseButton);
+    makeNoiseButton.setButtonText("MAKE NOISE!");
 }
 
 MidiSettingsPages::~MidiSettingsPages()
@@ -36,5 +38,7 @@ void MidiSettingsPages::resized()
 {
     // This method is where you should set the bounds of any child
     // components that your component contains..
+    auto area = getLocalBounds().reduced(10);
+    makeNoiseButton.setBounds(area.removeFromBottom(50).reduced(80, 0));
 
 }

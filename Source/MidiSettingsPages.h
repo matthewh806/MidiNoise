@@ -18,6 +18,8 @@
 class MidiSettingsPages    : public Component
 {
 public:
+    TextButton makeNoiseButton; // Make this an image button eventually
+    
     MidiSettingsPages();
     ~MidiSettingsPages();
 
