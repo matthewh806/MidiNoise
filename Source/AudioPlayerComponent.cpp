@@ -10,6 +10,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "AudioPlayerComponent.h"
+#include <stdlib.h>
 
 //==============================================================================
 AudioPlayerComponent::AudioPlayerComponent()
@@ -58,10 +59,24 @@ void AudioPlayerComponent::playSampleAudio()
     
     // TODO: For maximum fun and useability... don't hardcode this!
     
-    auto filePath = "~/Documents/Music/samples/dead_ends.wav";
+    auto filePath = "~/Projects/juce/MidiNoise/Assets";
+    
     File* file = new File(filePath);
     
-    auto* reader = formatManager.createReaderFor(*file);
+    Array<File> files;
+    if(file->isDirectory())
+    {
+        Logger::getCurrentLogger()->writeToLog("Path is directory");
+        files = file->findChildFiles(2, false);
+    } else if(file->existsAsFile()) {
+        Logger::getCurrentLogger()->writeToLog("Path is file");
+        files.add(*file);
+    } else {
+        // TODO: log something.
+    }
+    
+    auto idx = rand() % files.size() ;
+    auto* reader = formatManager.createReaderFor(files[idx]);
  
     if(reader == nullptr) {
         // TODO: Do some error handling?
