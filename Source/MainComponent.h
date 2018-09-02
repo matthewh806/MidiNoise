@@ -10,6 +10,8 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "GeneralPages.h"
+#include "MidiSettingsPages.h"
+#include "RangeSettingsPages.h"
 
 //==============================================================================
 /*
@@ -33,6 +35,8 @@ private:
     AudioDeviceManager deveiceManager;
     
     GeneralPages generalPages;
+    MidiSettingsPages midiSettingsPages;
+    RangeSettingsPages rangeSettingsPages;
     
     void setMidiOutput(int value);
     void sendMidiMessage(int channel, int type, int value);

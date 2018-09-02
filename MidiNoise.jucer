@@ -3,6 +3,14 @@
 <JUCERPROJECT id="oj5MyV" name="MidiNoise" projectType="guiapp" jucerVersion="5.3.2">
   <MAINGROUP id="JVPL5S" name="MidiNoise">
     <GROUP id="{F129E81D-422A-D544-CA10-E943DCAC0944}" name="Source">
+      <FILE id="QYK5vv" name="RangeSettingsPages.cpp" compile="1" resource="0"
+            file="Source/RangeSettingsPages.cpp"/>
+      <FILE id="WnC5vx" name="RangeSettingsPages.h" compile="0" resource="0"
+            file="Source/RangeSettingsPages.h"/>
+      <FILE id="j5xhVo" name="MidiSettingsPages.cpp" compile="1" resource="0"
+            file="Source/MidiSettingsPages.cpp"/>
+      <FILE id="NM2Mxe" name="MidiSettingsPages.h" compile="0" resource="0"
+            file="Source/MidiSettingsPages.h"/>
       <FILE id="xuWj5U" name="GeneralPages.cpp" compile="1" resource="0"
             file="Source/GeneralPages.cpp"/>
       <FILE id="ehUSuc" name="GeneralPages.h" compile="0" resource="0" file="Source/GeneralPages.h"/>

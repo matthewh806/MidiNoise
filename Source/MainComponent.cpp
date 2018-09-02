@@ -19,8 +19,10 @@
 
 MainComponent::MainComponent()
 {
-    setSize (600, 400);
+    setSize (800, 400);
     addAndMakeVisible(&generalPages);
+    addAndMakeVisible(&midiSettingsPages);
+    addAndMakeVisible(&rangeSettingsPages);
     
     generalPages.midiOutputList.onChange = [this]
     {
@@ -28,7 +30,7 @@ MainComponent::MainComponent()
     };
     
     generalPages.arpegiatorToggle.onChange = [this]
-    {        
+    {
         sendMidiMessage(2, 117, generalPages.arpegiatorToggle.getSelectedId() - 1);
     };
     
@@ -62,6 +64,8 @@ void MainComponent::resized()
 {
     auto area = getLocalBounds();
     generalPages.setBounds(0, 0, 200, 400);
+    midiSettingsPages.setBounds(200, 0, 400, 400);
+    rangeSettingsPages.setBounds(600, 0, 200, 400);
 }
 
 //==============================================================================
