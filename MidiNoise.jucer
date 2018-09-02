@@ -3,10 +3,14 @@
 <JUCERPROJECT id="oj5MyV" name="MidiNoise" projectType="guiapp" jucerVersion="5.3.2">
   <MAINGROUP id="JVPL5S" name="MidiNoise">
     <GROUP id="{F129E81D-422A-D544-CA10-E943DCAC0944}" name="Source">
+      <FILE id="hoffGm" name="AudioPlayerComponent.h" compile="0" resource="0"
+            file="Source/AudioPlayerComponent.h"/>
       <FILE id="QYK5vv" name="RangeSettingsPages.cpp" compile="1" resource="0"
             file="Source/RangeSettingsPages.cpp"/>
       <FILE id="WnC5vx" name="RangeSettingsPages.h" compile="0" resource="0"
             file="Source/RangeSettingsPages.h"/>
+      <FILE id="Ga8TWD" name="AudioPlayerComponent.cpp" compile="1" resource="0"
+            file="Source/AudioPlayerComponent.cpp"/>
       <FILE id="j5xhVo" name="MidiSettingsPages.cpp" compile="1" resource="0"
             file="Source/MidiSettingsPages.cpp"/>
       <FILE id="NM2Mxe" name="MidiSettingsPages.h" compile="0" resource="0"
@@ -40,6 +44,7 @@
         <MODULEPATH id="juce_audio_devices" path="../../../JUCE/modules"/>
         <MODULEPATH id="juce_audio_formats" path="../../../JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
@@ -48,6 +53,7 @@
     <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>

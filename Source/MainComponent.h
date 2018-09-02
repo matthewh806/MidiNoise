@@ -12,6 +12,7 @@
 #include "GeneralPages.h"
 #include "MidiSettingsPages.h"
 #include "RangeSettingsPages.h"
+#include "AudioPlayerComponent.h"
 
 //==============================================================================
 /*
@@ -33,6 +34,8 @@ private:
     //==============================================================================
     // Your private member variables go here...
     AudioDeviceManager deveiceManager;
+    
+    AudioPlayerComponent audioPlayer;
     
     GeneralPages generalPages;
     MidiSettingsPages midiSettingsPages;

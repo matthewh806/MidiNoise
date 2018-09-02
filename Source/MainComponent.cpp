@@ -48,6 +48,7 @@ MainComponent::MainComponent()
     midiSettingsPages.makeNoiseButton.onClick = [this]
     {
         Logger::getCurrentLogger()->writeToLog("Make some fucking noooooooise");
+        audioPlayer.playSampleAudio();
     };
 }
 
