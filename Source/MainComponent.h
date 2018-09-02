@@ -9,6 +9,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "GeneralPages.h"
 
 //==============================================================================
 /*
@@ -25,35 +26,18 @@ public:
     //==============================================================================
     void paint (Graphics&) override;
     void resized() override;
-
+    
 private:
     //==============================================================================
     // Your private member variables go here...
     AudioDeviceManager deveiceManager;
     
-    ComboBox midiOutputList;
-    Label midiOutputListLabel;
+    GeneralPages generalPages;
     
-    ComboBox arpegiatorToggle;
-    Label arpeggiatorToggleLabel;
-    
-    ComboBox latchToggle;
-    Label latchToggleLabel;
-    
-    ComboBox legatoToggle;
-    Label lagatoToggleLabel;
-    
-    ComboBox midiClock;
-    Label midiClockLabel;
-    
-    MidiOutput *output = nullptr;
-    
-    //==============================================================================
-    void setMidiOutput(int index);
-    void setArpegiatorState(int value);
-    void setLatchState(int value);
+    void setMidiOutput(int value);
     void sendMidiMessage(int channel, int type, int value);
     
-
+    MidiOutput *output = nullptr;
+    //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

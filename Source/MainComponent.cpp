@@ -7,6 +7,7 @@
 */
 
 #include "MainComponent.h"
+#include <iostream>
 
 //==============================================================================
 
@@ -19,38 +20,28 @@
 MainComponent::MainComponent()
 {
     setSize (600, 400);
+    addAndMakeVisible(&generalPages);
     
-    addAndMakeVisible(midiOutputListLabel);
-    midiOutputListLabel.setText("MIDI output:", dontSendNotification);
-    midiOutputListLabel.attachToComponent(&midiOutputList, true);
+    generalPages.midiOutputList.onChange = [this]
+    {
+        setMidiOutput(generalPages.midiOutputList.getSelectedId()-1);
+    };
     
-    addAndMakeVisible(midiOutputList);
-    midiOutputList.setTextWhenNoChoicesAvailable("No MIDI outputs enabled");
+    generalPages.arpegiatorToggle.onChange = [this]
+    {        
+        sendMidiMessage(2, 117, generalPages.arpegiatorToggle.getSelectedId() - 1);
+    };
     
-    auto midiOutputs = MidiOutput::getDevices();
+    generalPages.latchToggle.onChange = [this]
+    {
+        sendMidiMessage(2, 119, generalPages.latchToggle.getSelectedId() - 1);
+    };
     
-    midiOutputList.addItemList(midiOutputs, 1);
-    midiOutputList.onChange = [this] { setMidiOutput(midiOutputList.getSelectedId() - 1); };
-    
-    addAndMakeVisible(arpeggiatorToggleLabel);
-    arpeggiatorToggleLabel.setText("Arpegiator", dontSendNotification);
-    arpeggiatorToggleLabel.attachToComponent(&arpegiatorToggle, true);
-    
-    arpegiatorToggle.addItem("off", 1);
-    arpegiatorToggle.addItem("on", 2);
-//    arpegiatorToggle.setText("set");
-    arpegiatorToggle.onChange = [this] { setArpegiatorState(arpegiatorToggle.getSelectedId() - 1);};
-    addAndMakeVisible(arpegiatorToggle);
-    
-    addAndMakeVisible(latchToggleLabel);
-    latchToggleLabel.setText("Latch", dontSendNotification);
-    latchToggleLabel.attachToComponent(&latchToggle, true);
-    
-    latchToggle.addItem("off", 1);
-    latchToggle.addItem("on", 2);
-//    latchToggle.setText("set");
-    latchToggle.onChange = [this] { setLatchState(latchToggle.getSelectedId()-1);};
-    addAndMakeVisible(latchToggle);
+    generalPages.midiClock.onChange = [this]
+    {
+        // TODO: The value here is wrong, fix it!
+        sendMidiMessage(2, 119, generalPages.midiClock.getSelectedId() - 1);
+    };
 }
 
 MainComponent::~MainComponent()
@@ -61,20 +52,16 @@ MainComponent::~MainComponent()
 void MainComponent::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
+    g.fillAll (Colours::white);
 
     g.setFont (Font (16.0f));
     g.setColour (Colours::white);
-    g.drawText ("MAKE MIDI NOISE!", getLocalBounds(), Justification::centred, true);
 }
 
 void MainComponent::resized()
 {
     auto area = getLocalBounds();
-    
-    midiOutputList.setBounds(area.removeFromTop(36).removeFromRight(getWidth()-400).reduced(8));
-    arpegiatorToggle.setBounds(area.removeFromTop(36).removeFromRight(getWidth()-400).reduced(8));
-    latchToggle.setBounds(area.removeFromTop(36).removeFromRight(getWidth()-400).reduced(8));
+    generalPages.setBounds(0, 0, 200, 400);
 }
 
 //==============================================================================
@@ -90,25 +77,17 @@ void MainComponent::setMidiOutput(int index)
     output = MidiOutput::openDevice(index);
 }
 
-void MainComponent::setArpegiatorState(int value)
-{
-    sendMidiMessage(2, 117, value);
-}
-
-void MainComponent::setLatchState(int value)
-{
-    sendMidiMessage(2, 119, value);
-}
-
 void MainComponent::sendMidiMessage(int channel, int type, int value)
 {
     if(output == nullptr)
     {
         // TODO: Log a warning here and try to reconnect?
+        Logger::getCurrentLogger()->writeToLog("No output device found!");
         return;
     }
     
-    // TODO: Change this midi note to 117 for arpegiator state (this is an easier initial testing value)
+    Logger::getCurrentLogger()->writeToLog("I'm here!");
+    
     MidiMessage message = MidiMessage::controllerEvent(channel, type, value);
     output->sendMessageNow(message);
 }

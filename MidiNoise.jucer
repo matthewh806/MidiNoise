@@ -3,6 +3,9 @@
 <JUCERPROJECT id="oj5MyV" name="MidiNoise" projectType="guiapp" jucerVersion="5.3.2">
   <MAINGROUP id="JVPL5S" name="MidiNoise">
     <GROUP id="{F129E81D-422A-D544-CA10-E943DCAC0944}" name="Source">
+      <FILE id="xuWj5U" name="GeneralPages.cpp" compile="1" resource="0"
+            file="Source/GeneralPages.cpp"/>
+      <FILE id="ehUSuc" name="GeneralPages.h" compile="0" resource="0" file="Source/GeneralPages.h"/>
       <FILE id="oMeQIc" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="Naomqm" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
