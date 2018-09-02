@@ -52,7 +52,16 @@ void AudioPlayerComponent::playSampleAudio()
     Logger::getCurrentLogger()->writeToLog("Play audio file!");
     
     // TODO: For maximum fun and useability... don't hardcode this!
-    File* file = new File("~/Documents/Music/samples/dead_ends.wav");
+    
+    auto filePath = "~/Documents/Music/samples/dead_ends.wav";
+    File* file = new File(filePath);
+    if(!file->existsAsFile())
+    {
+        Logger::getCurrentLogger()->writeToLog("File at path not found!");
+        return;
+    }
+    
+    
     std::unique_ptr<AudioFormatReader> reader(formatManager.createReaderFor(*file));
  
     if(reader.get() == nullptr) {
