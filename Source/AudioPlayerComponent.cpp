@@ -32,17 +32,22 @@ AudioPlayerComponent::~AudioPlayerComponent()
 
 void AudioPlayerComponent::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 {
-    
+    transportSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
 }
 
 void AudioPlayerComponent::getNextAudioBlock(const juce::AudioSourceChannelInfo &buffer)
 {
+    if(readerSource.get() == nullptr) {
+        buffer.clearActiveBufferRegion();
+        return;
+    }
     
+    transportSource.getNextAudioBlock(buffer);
 }
 
 void AudioPlayerComponent::releaseResources()
 {
-    // TODO: Release resources!
+    transportSource.releaseResources();
 }
 
 //==============================================================================
@@ -55,21 +60,21 @@ void AudioPlayerComponent::playSampleAudio()
     
     auto filePath = "~/Documents/Music/samples/dead_ends.wav";
     File* file = new File(filePath);
-    if(!file->existsAsFile())
-    {
-        Logger::getCurrentLogger()->writeToLog("File at path not found!");
-        return;
-    }
     
-    
-    std::unique_ptr<AudioFormatReader> reader(formatManager.createReaderFor(*file));
+    auto* reader = formatManager.createReaderFor(*file);
  
-    if(reader.get() == nullptr) {
+    if(reader == nullptr) {
         // TODO: Do some error handling?
         return;
     }
     
     auto duration = reader->lengthInSamples / reader->sampleRate;
+    
+    std::unique_ptr<AudioFormatReaderSource> newSource(new AudioFormatReaderSource(reader, true));
+    transportSource.setSource(newSource.get(), 0, nullptr, reader->sampleRate);
+    transportSource.setPosition(0.0);
+    transportSource.start();
+    readerSource.reset(newSource.release());
     
     Logger::getCurrentLogger()->writeToLog(std::to_string(duration));
 }
